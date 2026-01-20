@@ -83,4 +83,17 @@ public class ProductDAO {
                 e.printStackTrace();
              }
     }
+
+    // Delete Product
+    public void deleteProduct(Product product) {
+        String query = "DELETE FROM products WHERE id=?";
+
+        try(Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setInt(1, id);
+                
+                ps.executeUpdate();
+                System.out.println("Product Deleted Successfully")
+            }
+    }
 }
