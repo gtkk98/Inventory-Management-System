@@ -65,3 +65,4 @@ public class Product {
     public void setMinStockLevel(int minStockLevel){
         this.minStockLevel = minStockLevel;
     }
+}
