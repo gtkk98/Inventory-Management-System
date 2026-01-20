@@ -58,4 +58,87 @@ public class Main {
 
         } while (choice !=0);
     }
+
+    //Add Product
+    private static void addProduct(Scanner sc, ProductDAO dao) {
+        // Consume leftover newline
+        sc.nextLine();
+
+        System.out.print("Enter Product Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Category: ");
+        String category = sc.nextLine();
+        
+        System.out.print("Enter Price:");
+        double price = sc.nextDouble();
+
+        System.out.print("Enter Quantitiy: ");
+        int quantity = sc.nextInt();
+
+        System.out.print("Enter Minimum Stock Level: ");
+        int minStock = sc.nextInt();
+
+        //Create Product Object
+        Product p = new Product(name, category, price, quantity, minStock);
+
+        // Send to DAO
+        dao.addProduct(p);
+
+    }
+
+    // View All Products
+    private static void viewAllProducts(ProductDAO dao) {
+        List<Product> products = dao.getAllProducts();
+
+        System.out.println("\n----- Product List -----");
+        for (Product p : products) {
+            System.out.println("ID: " + p.getId());
+            System.out.println("Name: " + p.getName());
+            System.out.println("Category: " + p.getCategory());
+            System.out.println("Price: " + p.getPrice());
+            System.out.println("Quantity: " + p.getQuantity());
+            System.out.println("Min Stock Level: " + p.getMinStockLevel());
+            System.out.println("-----------------------");
+        }
+    }
+
+    //Update Product
+    private static void updateProduct(Scanner sc, ProductDAO dao) {
+        System.out.print("Enter Product ID to Update: ");
+        int id = sc.nextInt();
+
+        // Consume leftover newline
+        sc.nextLine();
+
+        System.out.print("Enter New Product Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter New Category: ");
+        String category = sc.nextLine();
+        
+        System.out.print("Enter New Price:");
+        double price = sc.nextDouble();
+
+        System.out.print("Enter New Quantitiy: ");
+        int quantity = sc.nextInt();
+
+        System.out.print("Enter New Minimum Stock Level: ");
+        int minStock = sc.nextInt();
+
+        //Create Product Object
+        Product p = new Product(name, category, price, quantity, minStock);
+        p.setId(id); // Set the ID for update
+
+        // Send to DAO
+        dao.updateProduct(p);
+    }
+
+    // Delete product
+    private static void deleteProduct(Scanner sc, ProductDAO dao) {
+        System.out.print("Enter Product ID: ");
+        int id = sc.nextInt();
+
+        dao.deleteProduct(id);
+    }
 }
