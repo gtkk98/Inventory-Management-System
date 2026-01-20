@@ -44,9 +44,7 @@ public class ProductDAO {
 
         try (Connection con = DBConnection.getConnection();
              Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(query)) 
-             {
-
+             ResultSet rs = st.executeQuery(query)) {
                 while(rs.next()) {
                     Product p = new Product();
 
@@ -63,5 +61,26 @@ public class ProductDAO {
             } catch (Exception e) {
                 e.printStackTrace();
                 }
+            return list;
+    }
+
+    // Update Products
+    public void updateProduct(Product product) {
+        String query = "UPDATE products SET name=?, category=?, price=?, quantity=?, min_stock_level=? WHERE id=?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement  ps = con.prepareStatement(query)) {
+                ps.setString(1, product.getName());
+                ps.setString(2, product.getCategory());
+                ps.setDouble(3, product.getPrice());
+                ps.setInt(4, product.getQuantity());
+                ps.setInt(5, product.getMinStockLevel());
+                ps.setInt(6, product.getId());
+
+                ps.executeUpdate();
+                System.out.println("Product Updated Successfully")
+             } catch (Exception e) {
+                e.printStackTrace();
+             }
     }
 }
