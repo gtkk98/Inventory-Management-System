@@ -19,7 +19,8 @@ public class ProductDAO {
         String query = "INSERT INTO products (name, category, price, quantity, min_stock_level) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection();
-             PreparedStatement ps = con.prepareStatement(query)) {
+             PreparedStatement ps = con.prepareStatement(query)) 
+             {
 
                 //Set value into SQL Query
                 ps.setString(1, product.getName());
@@ -33,6 +34,34 @@ public class ProductDAO {
                 
              } catch (Exception e) {
                 e.printStackTrace();
-             }
+                }
+    }
+
+    // Retrieve all products from database
+    public List<Product> getAllProducts() {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM products";
+
+        try (Connection con = DBConnection.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery(query)) 
+             {
+
+                while(rs.next()) {
+                    Product p = new Product();
+
+                    //Reading data from DB and setting into object
+                    p.setId(rs.getInt("id"));
+                    p.setName(rs.getString("name"));
+                    p.setCategory(rs.getString("category"));
+                    p.setPrice(rs.getDouble("price"));
+                    p.setQuantity(rs.getInt("quantity"));
+                    p.setMinStockLevel(rs.getInt("min_stock_level"));
+
+                    list.add(p);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                }
     }
 }
