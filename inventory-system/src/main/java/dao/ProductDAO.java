@@ -78,22 +78,25 @@ public class ProductDAO {
                 ps.setInt(6, product.getId());
 
                 ps.executeUpdate();
-                System.out.println("Product Updated Successfully")
+                System.out.println("Product Updated Successfully");
              } catch (Exception e) {
                 e.printStackTrace();
              }
     }
 
     // Delete Product
-    public void deleteProduct(Product product) {
+    public void deleteProduct(int id) {
         String query = "DELETE FROM products WHERE id=?";
 
         try(Connection con = DBConnection.getConnection();
             PreparedStatement ps = con.prepareStatement(query)) {
+
                 ps.setInt(1, id);
-                
                 ps.executeUpdate();
-                System.out.println("Product Deleted Successfully")
+                System.out.println("Product Deleted Successfully");
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
     }
 }
